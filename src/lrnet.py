@@ -34,7 +34,7 @@ def calculate_representativeness(S, min_neighbors, reduction):
     max_similarity = [max(get_neighbors(S, o)) for o in objects]
     for o in objects:
         for i, sim in get_neighbors_i(S, o):
-            if sim == max_similarity[o]:
+            if math.isclose(sim, max_similarity[o], rel_tol=1e-8):
                 g[i] += 1
     # x-representativeness base
     b = [((1 + d[o]) ** (1 / g[o]) if g[o] > 0 else 0) for o in objects]
@@ -72,7 +72,7 @@ def LRNet(D, min_neighbors=1, reduction=1.0):
 
 if __name__ == "__main__":
     import pandas as pd
-    D = pd.read_csv('iris.csv', ';', nrows=10)
+    D = pd.read_csv('iris.csv', ';', nrows=150)
     label = 'variety'
     D[label] = D[label].astype('category')
 
